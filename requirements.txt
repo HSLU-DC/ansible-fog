@@ -1,2 +1,4 @@
-#add python modules that are not in the standard library
-#numpy
+ansible
+requests
+json
+logging
