@@ -119,7 +119,7 @@ def list_hosts(url, fog_api_token, fog_user_token, output='minimal'):
         for host in hosts_list["hosts"]:
             for i in range(int(hosts_list["count"])+50):
                 if int(host['id']) is i:
-                    hosts_fancy_list['hosts'][i] = f'{host['description']}, {host['ip']}, {host['primac']}'
+                    hosts_fancy_list['hosts'][i] = f"{host['description']}, {host['ip']}, {host['primac']}"
                 else:
                     pass
         return hosts_fancy_list
