@@ -1,5 +1,6 @@
 ---
-- hosts: localhost
+- name: Test API Connection
+  hosts: localhost
   tasks:
     - name: Test API Connection
       fog_ansible:
@@ -10,5 +11,6 @@
         output: "full"
       register: api_connection_result
 
-    - debug:
+    - name: Debug API Connection Result
+      ansible.builtin.debug:
         var: api_connection_result
