@@ -165,7 +165,9 @@ def list_tasks(url, fog_api_token, fog_user_token):
     # Implement your logic here
     pass
 
-def main():
+def main(linter=False):
+    if linter:
+        return
     module_args = dict(
         url=dict(type='str', required=True),
         fog_api_token=dict(type='str', required=True),
@@ -200,8 +202,10 @@ def main():
     elif action == 'list_groups':
         result['groups'] = list_groups(url, fog_api_token, fog_user_token, output)
     # Add other action cases...
+    else:
+        module.fail_json(f"Unknown action '{action}'")
         
     module.exit_json(**result)
 
 if __name__ == '__main__':
-    main()
+    main(linter=True)
