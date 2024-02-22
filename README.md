@@ -3,6 +3,19 @@
 ## Description
 <!-- Brief description of the project. -->
 
+The Ansible Fog Project Integration is a set of Ansible modules designed to streamline the interaction with a Fog Project server using its API. This integration allows users to perform various tasks, such as testing the API connection, listing hosts and groups, and executing specific actions on the Fog Project server.
+
+### Features
+
+- **Test API Connection:** Verify the connectivity to the Fog Project server's API using provided authentication tokens.
+  
+- **List Hosts and Groups:** Retrieve information about hosts and groups from the Fog Project server, providing options for minimal or detailed output.
+
+- **Flexible Usage:** Execute Ansible playbooks with specific actions to interact with the Fog Project server based on your requirements.
+
+Follow the provided instructions to clone the repository, navigate to the project directory, install dependencies, and execute Ansible modules. Use the usage examples to integrate the Ansible modules into your workflow seamlessly.
+
+
 ## Getting Started
 <!-- Instructions on how to get the project up and running. -->
 
