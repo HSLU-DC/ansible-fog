@@ -7,6 +7,7 @@
         fog_api_token: "NzZmMTAzODJhZjVlNTkxOTQ4OGFlMDQ3OWE4ZWRkNjhkYTgxZWMxM2YxMzY5YWZjZGM3MDAzNjQzNWY0NzM0NTFjNGU3ODc0MGM1OTY2NzY3ZDkzNzhkYTY4ZDhlYTVhYWYwY2NjYjkzMDQzZGNkMTBjMjY3NmNlNTI2ODZlYjE"
         fog_user_token: "MzdlYjMyNTcxODc2M2UwODZkNzBlZGFhYmE2MDU2NjcxNDEwNzVkZTQ2MTliOWU4MTlkODVmZTQ5ZDQxYjRkNzE1MWU2ZDkxM2RmY2VjMjQ5ZWJkYWI1MjQ0ZDJhODY3MGEyZmQzZmZhOWU5ZDg1YzM1YTNlYTkyZjI3N2IyYmE"
         action: "list_hosts"
+        output: "full"
       register: api_connection_result
 
     - debug:
