@@ -141,7 +141,7 @@ def list_groups(url, fog_api_token, fog_user_token, output='minimal'):
         for group in group_list["groups"]:
             for i in range(int(group_list["count"])+50):
                 if int(group['id']) is i:
-                    group_fancy_list['hosts'][i] = f'{group['name']}, {group['description']}, {group['hostcount']}'
+                    group_fancy_list['hosts'][i] = f"{group['name']}, {group['description']}, {group['hostcount']}"
                 else:
                     pass
         return group_fancy_list
