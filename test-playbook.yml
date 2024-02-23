@@ -2,16 +2,45 @@
 - name: Test API Connection
   hosts: localhost
   tasks:
-    - name: Test API Connection
+    - name: Test test_api_connection
+      fog_ansible:
+        url: "{{ fog_url }}"
+        fog_api_token: "{{ fog_api_token }}"
+        fog_user_token: "{{ fog_user_token }}"
+        action: "test_api_connection"
+
+    - name: Test list_groups
+      fog_ansible:
+        url: "{{ fog_url }}"
+        fog_api_token: "{{ fog_api_token }}"
+        fog_user_token: "{{ fog_user_token }}"
+        action: "list_groups"
+
+    - name: Test list_hosts
+      fog_ansible:
+        url: "{{ fog_url }}"
+        fog_api_token: "{{ fog_api_token }}"
+        fog_user_token: "{{ fog_user_token }}"
+        action: "list_hosts"
+      register: list_hosts_result
+
+    - name: Test create_group
       fog_ansible:
         url: "{{ fog_url }}"
         fog_api_token: "{{ fog_api_token }}"
         fog_user_token: "{{ fog_user_token }}"
         action: "create_group"
-        output: "full"
-        group_name: "testtest"
-      register: api_connection_result
+        group_name: "create_group3"
+    
+    - name: Test delete_group
+      fog_ansible:
+        url: "{{ fog_url }}"
+        fog_api_token: "{{ fog_api_token }}"
+        fog_user_token: "{{ fog_user_token }}"
+        action: "delete_group"
+        group_name: "create_group3"
+      register: delete_group_result
 
     - name: Debug API Connection Result
       ansible.builtin.debug:
-        var: api_connection_result
+        var: delete_group_result
