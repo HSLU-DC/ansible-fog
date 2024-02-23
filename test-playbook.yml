@@ -7,8 +7,9 @@
         url: "{{ fog_url }}"
         fog_api_token: "{{ fog_api_token }}"
         fog_user_token: "{{ fog_user_token }}"
-        action: "list_hosts"
+        action: "create_group"
         output: "full"
+        group_name: "testtest"
       register: api_connection_result
 
     - name: Debug API Connection Result

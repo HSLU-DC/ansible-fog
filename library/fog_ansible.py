@@ -18,14 +18,7 @@ def test_api_connection(url, fog_api_token, fog_user_token, timeout=10):
         if response.status_code == 200:
             return "Successful!"
         else:
-            return "Unsuccessful!" 
-        # Check for HTTP errors
-        response.raise_for_status()
-
-        # Check for API-level errors
-        response_json = response.json()
-        if response_json.get('error'):
-            raise ValueError(f"Fog API error: {response_json['error']['message']}")
+            return "Unsuccessful!"
 
     except requests.exceptions.Timeout:
         logging.error(f"Request to {url} timed out after {timeout} seconds.")
@@ -153,9 +146,47 @@ def add_hosts_to_group(url, fog_api_token, fog_user_token, group_name, hosts):
     # Implement your logic here
     pass
 
+#def create_group(url, fog_api_token, fog_user_token, group_name = "ABCD", timeout=10):
 def create_group(url, fog_api_token, fog_user_token, group_name):
-    # Implement your logic here
-    pass
+    url = f"{url.rstrip('/')}/group/create"
+    payload = {"name": group_name, "description": "Group created by Ansible", }
+    headers = {
+        'fog-user-token': fog_user_token,
+        'fog-api-token': fog_api_token,
+        'Content-Type': 'application/json'  # Assuming JSON payload
+    }
+
+    try:
+        response = requests.post(url, headers=headers, json=payload)
+        response.raise_for_status()
+
+        response_json = response.json()
+        if response_json.get('error'):
+            raise ValueError(f"Fog API error: {response_json['error']['message']}")
+
+        response_output = {
+            "Group created": group_name,
+            "Group ID": response_json['id']
+        }
+
+        return response_output
+
+    except requests.exceptions.Timeout:
+        logging.error(f"Request to {url} timed out.")
+        raise
+
+    except requests.exceptions.RequestException as e:
+        logging.error(f"Error making request to {url}: {e}")
+        raise
+
+    except ValueError as ve:
+        logging.error(ve)
+        raise
+
+    except Exception as ex:
+        logging.error(f"Unknown error: {ex}")
+        raise
+
 
 def create_task(url, fog_api_token, fog_user_token, task_name, multicast_targets):
     # Implement your logic here
@@ -165,15 +196,14 @@ def list_tasks(url, fog_api_token, fog_user_token):
     # Implement your logic here
     pass
 
-def main(linter=False):
-    if linter:
-        return
+def main():
     module_args = dict(
         url=dict(type='str', required=True),
         fog_api_token=dict(type='str', required=True),
         fog_user_token=dict(type='str', required=True),
         action=dict(type='str', required=True),
         output=dict(type='str', required=False),
+        group_name=dict(type='str', required=False),
         # Add other required parameters for specific actions
     )
 
@@ -193,6 +223,7 @@ def main(linter=False):
     fog_user_token = module.params['fog_user_token']
     action = module.params['action']
     output = module.params['output']
+    group_name = module.params['group_name']
 
     # Implement logic based on the specified action
     if action == 'test_api_connection':
@@ -201,6 +232,8 @@ def main(linter=False):
         result['hosts'] = list_hosts(url, fog_api_token, fog_user_token, output)
     elif action == 'list_groups':
         result['groups'] = list_groups(url, fog_api_token, fog_user_token, output)
+    elif action == 'create_group':
+        result['group'] = create_group(url, fog_api_token, fog_user_token, group_name)
     # Add other action cases...
     else:
         module.fail_json(f"Unknown action '{action}'")
@@ -208,4 +241,4 @@ def main(linter=False):
     module.exit_json(**result)
 
 if __name__ == '__main__':
-    main(linter=True)
+    main()
